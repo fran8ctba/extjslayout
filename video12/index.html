@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" media="screen" href="../extjs/resources/css/ext-all.css" />
+    <script src="../extjs/ext-all.js"></script>
+
+</head>
+<body>
+    
+</body>
+
+<script type="text/javascript">
+    Ext.define('Funcionario',{
+        extend: 'Ext.data.Model',
+
+       fields: [
+            { name: 'nome' }, //tipo: auto
+            { name: 'idade', type: 'int' }, //
+            // { name: 'idade', type: Ext.data.Types.INT},
+            { name: 'salario', type: 'float' }, //Ext.data.Types.FLOAT
+            { name: 'status', type: 'boolean' }, //Ext.data.Types.BOOL
+            { name: 'nasc', type: 'date', dateFormat: 'd/m/Y' }, //Ext.data.Types.DATE
+            { name: 'login', type: 'string' }, //Ext.data.Types.STRING
+            {
+                name: 'email', type: 'string',
+                convert: function (value, record) {
+                    return record.get('login') + '@email.com'
+                }
+            },
+            {name: 'genero', type: 'string'}
+        ],
+
+        validations:[
+            {type: 'presence', field: 'nome'},
+            {type: 'presence', field: 'login'},
+            {type: 'presence', field : 'idade'},
+            {type: 'length', field : 'login', min: 3, max: 10},
+            {type: 'format', field: 'nome', matcher: /([a-z]+)/},
+            {type: 'inclusion', field: 'genero', list: ['F', 'M']},
+            {type: 'exclusion', field: 'idade', list: [0]},
+        ]
+    });
+
+    Ext.onReady(function(){
+        var funcionario = Ext.create('Funcionario',{
+            idade: 25,
+            status: true,
+            nome: 'Francieli',
+            login: 'fran8',
+            genero: 'F',
+            idade: 25
+        });
+
+        console.log(funcionario);
+
+        var errors = funcionario.validate();
+
+        console.log(errors.isValid());
+        console.log(errors.items);
+        console.log(errors.getByField('nome'));
+    });
+</script>
+</html>
