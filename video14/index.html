@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="text/css" media="screen" href="../extjs/resources/css/ext-all.css" />
+    <script src="../extjs/ext-all.js"></script>
+</head>
+
+<body>
+
+</body>
+
+<script type="text/javascript">
+
+    Ext.define('Pessoa', {
+        extend: 'Ext.data.Model',
+
+        fields: [
+            { name: 'id', type: 'int' },
+            { name: 'nome', type: 'string' },
+            { name: 'sobrenome', type: 'string' }
+        ],
+
+        proxy: {
+            type: 'rest',
+            url: 'dados',
+            format: 'json'
+        },
+
+        // Ele espera pessoa_id mas se no teu back estiver diferente declara a foreignKey
+        hasMany: { model: 'Telefone', foreignKey: 'pessoaId' },
+        hasOne: { model: 'Endereco', foreignKey: 'pessoaId' }
+    });
+
+    Ext.define('Telefone', {
+        extend: 'Ext.data.Model',
+
+        fields: [
+            { name: 'id', type: 'int' },
+            { name: 'ddd', type: 'int' },
+            { name: 'numero', type: 'long ' },
+            { name: 'pessoaId', type: 'long ' }
+
+        ],
+
+        belongsTo: { model: 'Pessoa', foreignKey: 'pessoaId' }
+    });
+
+    Ext.define('Endereco', {
+        extend: 'Ext.data.Model',
+
+        fields: [
+            { name: 'id', type: 'int' },
+            { name: 'logradouro', type: 'int' },
+            { name: 'numero', type: 'long ' },
+            { name: 'complemento', type: 'string ' },
+            { name: 'pessoaId', type: 'long ' }
+        ],
+
+         belongsTo: { model: 'Pessoa', foreignKey: 'pessoaId' }
+    });
+
+    Ext.onReady(function () {
+
+        Pessoa.load(1, {
+            success: function (pessoa) {
+                console.log('Nome da pessoa é ' + pessoa.get('nome'));
+
+                var telefones = pessoa.telefones();
+
+                var i = 1;
+                telefones.each(function (tel) {
+
+                    console.log('Telefone(' + i + ') : ' + tel.get('ddd') + ' ' + tel.get('numero'));
+                    i++;
+                    var p = tel.getPessoa();
+
+                    console.log('Numero pertence a ' + p.get('nome'));
+                });
+
+                var end = pessoa.getEndereco();
+                
+                var p = end.getPessoa();
+
+                console.log('Rua : ' + end.get('logradouro') + ' nº : ' + end.get('numero'));
+                console.log('Enderece pertence a ' + p.get('nome'));
+
+
+            }
+        });
+
+    });
+
+</script>
+
+</html>

@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="../extjs/resources/css/ext-all.css">
+    <script src="../extjs/ext-all.js"></script>
+</head>
+
+<body>
+    <div id="estadosBR"></div>
+
+</body>
+
+<script type="text/javascript">
+
+
+    var estadosBrasileiros = [
+        { "id": '1', "nome": 'Acre',"sigla": 'AC'},
+        { "id": '2', "nome": 'Alagoas',"sigla": 'AL'},
+        { "id": '3', "nome": 'Amapá',"sigla": 'AP'},
+        { "id": '4', "nome": 'Amazonas',"sigla": 'AM'},
+    ];
+
+    Ext.define('Estado', {
+        extend: 'Ext.data.Model',
+        fields: ['id', 'nome', 'sigla']
+    });
+
+    Ext.define('EstadoStore', {
+        extend: 'Ext.data.Store',
+        model: 'Estado',
+        data: estadosBrasileiros,
+        proxy:{
+            type: 'memory',
+            format: 'json',
+            
+        }
+    });
+
+    Ext.onReady(function () {
+
+        var store = Ext.create('EstadoStore');
+
+        console.log(store.data.items);
+
+        var tpl = Ext.create('Ext.XTemplate',
+            '<h1>Estados Brasileiros:</h1>',
+            '<tpl for=".">',
+            '<p>{data.nome} - {data.sigla}</p>',
+            '</tpl>'
+        );
+
+        tpl.overwrite('estadosBR', store.data.items);
+
+    });
+</script>
+
+</html>

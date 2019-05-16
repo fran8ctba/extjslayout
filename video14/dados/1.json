@@ -1,0 +1,23 @@
+{
+    "id": 1,
+    "nome": "Francieli",
+    "sobrenome": "Ferreira",
+    "telefones": [
+        {
+            "id": 1,
+            "ddd": 41,
+            "numero": 32691901
+        },
+        {
+            "id": 2,
+            "ddd": 41,
+            "numero": 22222222
+        }
+    ],
+    "endereco":{
+        "id": 1,
+        "logradouro": "Rua da Chegou a sua hora",
+        "numero": 4,
+        "complemento": "apartamento 4"
+    }
+}

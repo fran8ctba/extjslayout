@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" type="text/css" media="screen" href="../extjs/resources/css/ext-all.css" />
+    <script src="../extjs/ext-all.js"></script>
+</head>
+<body>    
+</body>
+
+<script type="text/javascript">
+
+    Ext.define('Contato', {
+        extend: 'Ext.data.Model',
+
+        fields: [
+            {name: 'id', type: 'int'},
+            {name: 'nome', type: 'string'},
+            {name: 'email', type: 'string'}
+        ],
+            
+    });
+
+    Ext.define('ContatoStore',{
+        extend: 'Ext.data.Store',
+        model:'Contato',
+        proxy: {
+            type: 'ajax',
+            url: 'php/listaContatosJson.php',
+
+            reader: {
+                type: 'json'
+            }
+        },
+        autoLoad: true
+    });
+
+
+    Ext.onReady(function(){
+
+        var store = Ext.create('ContatoStore')
+
+        console.log(store);
+
+
+    });
+
+</script>
+
+
+</html>
