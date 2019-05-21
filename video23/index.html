@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" type="text/css" media="screen" href="../extjs/resources/css/ext-all.css" />
+    <script src="../extjs/ext-all.js"></script>
+</head>
+
+<body>
+</body>
+
+<script type="text/javascript">
+
+    Ext.define('Contato', {
+        extend: 'Ext.data.Model',
+
+        fields: [
+            { name: 'id', type: 'int' },
+            { name: 'nome', type: 'string' },
+            { name: 'email', type: 'string' }
+        ],
+
+    });
+
+    Ext.define('ContatoStore', {
+        extend: 'Ext.data.Store',
+        model: 'Contato',
+        proxy: {
+            type: 'rest',
+            url: 'http://loiane.com/cursoextjs4/aula23/php/listaContatos.php',
+
+            reader: {
+                type: 'json',
+                root: 'contatos' //qual é a raiza que tem a informação que está interessado
+            },
+            // writer: {
+            //     type: 'json',
+            //     root: 'contatos',
+            //     writeAllFields: true, //se for igual a false passa apenas o id
+            //     encode: true,
+            //     allowSingle: true // nao precisa ter quando for xml
+            // }
+        },
+        autoLoad: true,
+        autoSync: true
+    });
+
+
+    Ext.onReady(function () {
+
+        var store = Ext.create('ContatoStore');
+
+        // console.log(store.data);
+
+        store.on('load', function(s) {
+
+            console.log(s.data.items);
+
+            var contato = Ext.create('Contato', {
+                nome: 'Jessica ferreira',
+                email: 'ferreira@engefoto.com'
+            });
+
+            // CREATE
+            //  s.add(contato);
+            // s.insert(0,contato); //insere contato na primeira posição da store
+            
+            // UPDATE
+            // var contatoAtualizado = s.getAt(1);
+            // contatoAtualizado.set('nome','Jessica Ferreira')
+            
+            // DELETE
+            // s.remove(modelo); //pode remover por um array
+            // s.removeAt(id); //remove por id 
+            // s.removeAll(); //para remover todos as linhas da tabela // pode ser ser passado *silent* dentro do method
+
+            // s.remove(s.getAt(1));
+            //  s.removeAt(2);
+
+            // s.sync();
+        });
+    });
+
+</script>
+
+
+</html>

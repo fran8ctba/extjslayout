@@ -1,6 +1,6 @@
 <?php
 //connect to db
-include("db.php");
+include("../db.php");
  
 //sql query
 $query = pg_query("SELECT * FROM Contato") or die(pg_error());

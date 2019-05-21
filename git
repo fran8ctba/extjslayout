@@ -1,0 +1,8 @@
+ git config --global user.email "fran8ctba@hotmail.com
+ git config --global user.name "fran8ctba"
+ git commit -m "first commit"
+ git commit -m "videos 11,12,13,14,15,16,17,18,19,20"
+git remote add origem https://github.com/fran8ctba/videos.git
+git push -u origem master
+
+https://github.com/DevPedroDias/myapp/invitations
